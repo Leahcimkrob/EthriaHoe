@@ -1,4 +1,4 @@
-package bloody_mind.Ethria_Hoe; // Passe das Package an
+package bloodymind.Ethria_Hoe; // Passe das Package an
 
 import org.bukkit.Material;
 import org.bukkit.entity.ItemFrame;

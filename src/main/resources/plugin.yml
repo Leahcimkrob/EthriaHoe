@@ -1,0 +1,13 @@
+name: EthriaHoe
+main: de.leahcimkrob.ethriahoe.EthriaHoe
+version: 1.0
+api-version: 1.19
+author: Bloody_Mind
+description: Toggle ItemFrame properties (fixed/visible) with a hoe.
+permissions:
+  ethriahoe.toggleFixed:
+    description: "Erlaubt das Umschalten des Fixed-Status von Rahmen mit der Hoe"
+    default: op
+  ethriahoe.toggleVisible:
+    description: "Erlaubt das Umschalten der Sichtbarkeit von Rahmen mit der Hoe"
+    default: opn

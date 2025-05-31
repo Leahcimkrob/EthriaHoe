@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>bloody_mind</groupId>
-    <artifactId>Ethria_Hoe</artifactId>
+    <artifactId>EthriaHoe</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
