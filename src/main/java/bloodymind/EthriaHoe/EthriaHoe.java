@@ -1,4 +1,4 @@
-package bloodymind.Ethria_Hoe; // Passe das Package an
+package bloodymind.EthriaHoe; // Passe das Package an
 
 import org.bukkit.Material;
 import org.bukkit.entity.ItemFrame;
@@ -7,7 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
-public class Ethria_Hoe implements Listener {
+public class EthriaHoe implements Listener {
     private final Material toggleItem = Material.WOODEN_HOE; // Kann bei Bedarf konfigurierbar gemacht werden
 
     @EventHandler(ignoreCancelled = true)
