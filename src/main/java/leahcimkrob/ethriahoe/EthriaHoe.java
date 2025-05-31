@@ -1,4 +1,4 @@
-package bloodymind.ethriahoe; // Passe das Package an
+package leahcimkrob.ethriahoe; // Passe das Package an
 
 import org.bukkit.Material;
 import org.bukkit.entity.ItemFrame;
