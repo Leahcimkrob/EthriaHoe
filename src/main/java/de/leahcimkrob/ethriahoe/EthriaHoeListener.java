@@ -8,13 +8,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
 public class EthriaHoeListener implements Listener {
-    private final Material toggleItem = Material.WOODEN_HOE; // ggf. konfigurierbar
+    private final Material toggleItem = Material.WOODEN_HOE; // Kann bei Bedarf konfigurierbar gemacht werden
 
     @EventHandler(ignoreCancelled = true)
     public void onToggleFrameProperty(PlayerInteractEntityEvent event) {
         if (!(event.getRightClicked() instanceof ItemFrame)) return;
-        Player p = event.getPlayer();
+
         ItemFrame frame = (ItemFrame) event.getRightClicked();
+        Player p = event.getPlayer();
 
         if (p.getInventory().getItemInMainHand().getType() != toggleItem)
             return;
