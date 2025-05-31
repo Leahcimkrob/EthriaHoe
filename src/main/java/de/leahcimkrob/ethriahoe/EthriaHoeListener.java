@@ -21,12 +21,12 @@ public class EthriaHoeListener implements Listener {
             return;
 
         if (p.isSneaking()) {
-            if (p.hasPermission("imagemaps.toggleFixed")) {
+            if (p.hasPermission("ethriahoe.toggleFixed")) {
                 event.setCancelled(true);
                 frame.setFixed(!frame.isFixed());
                 p.sendMessage("Frame set to " + (frame.isFixed() ? "fixed" : "unfixed"));
             }
-        } else if (p.hasPermission("imagemaps.toggleVisible")) {
+        } else if (p.hasPermission("ethriahoe.toggleVisible")) {
             event.setCancelled(true);
             frame.setVisible(!frame.isVisible());
             p.sendMessage("Frame set to " + (frame.isVisible() ? "visible" : "invisible"));
