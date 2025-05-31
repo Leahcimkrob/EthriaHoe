@@ -7,7 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
-public class EthriaHoe implements Listener {
+public class Ethria_Hoe implements Listener {
     private final Material toggleItem = Material.WOODEN_HOE; // Kann bei Bedarf konfigurierbar gemacht werden
 
     @EventHandler(ignoreCancelled = true)
