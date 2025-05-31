@@ -1,4 +1,4 @@
-package bloodymind.EthriaHoe; // Passe das Package an
+package bloodymind.ethriahoe; // Passe das Package an
 
 import org.bukkit.Material;
 import org.bukkit.entity.ItemFrame;
