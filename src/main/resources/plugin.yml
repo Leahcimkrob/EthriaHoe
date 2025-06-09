@@ -10,4 +10,4 @@ permissions:
     default: op
   ethriahoe.toggleVisible:
     description: "Erlaubt das Umschalten der Sichtbarkeit von Rahmen mit der Hoe"
-    default: opn
+    default: op
