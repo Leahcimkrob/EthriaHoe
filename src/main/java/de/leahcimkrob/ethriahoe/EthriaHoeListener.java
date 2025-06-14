@@ -11,7 +11,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class EthriaHoeListener implements Listener {
 
@@ -21,21 +22,31 @@ public class EthriaHoeListener implements Listener {
         FileConfiguration config = EthriaHoe.getInstance().getConfig();
         String prefix = config.getString("prefix", "");
 
-        // Hole das Item aus der Config als lokale Variable
-        Material toggleItem;
-        try {
-            toggleItem = Material.valueOf(config.getString("toggle_item", "WOODEN_HOE"));
-        } catch (IllegalArgumentException e) {
-            toggleItem = Material.WOODEN_HOE;
-        }
-        if (!(event.getRightClicked() instanceof ItemFrame)) return;
-        if (p.getInventory().getItemInMainHand().getType() != toggleItem)
-            return;
+        // Mehrere erlaubte Items aus der Config laden
+        List<String> toggleItemsConfig = config.getStringList("toggle_items");
+        Set<Material> allowedItems = toggleItemsConfig.stream()
+                .map(name -> {
+                    try {
+                        return Material.valueOf(name);
+                    } catch (Exception e) {
+                        return null;
+                    }
+                })
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
 
+        if (allowedItems.isEmpty()) {
+            // Fallback: WOODEN_HOE
+            allowedItems.add(Material.WOODEN_HOE);
+        }
+
+        if (!(event.getRightClicked() instanceof ItemFrame)) return;
+        if (!allowedItems.contains(p.getInventory().getItemInMainHand().getType())) {
+            return;
+        }
 
         // Prüfen ob PlotSquared installiert ist
         if (EthriaHoe.getInstance().isPlotsquaredAvailable()) {
-            // PlotSquared-Logik wie gehabt
             PlotPlayer<?> plotPlayer = PlotPlayer.from(p);
             org.bukkit.Location bukkitLoc = event.getRightClicked().getLocation();
             com.plotsquared.core.location.Location plotLoc = com.plotsquared.core.location.Location.at(
@@ -70,9 +81,7 @@ public class EthriaHoeListener implements Listener {
             }
         }
         // Wenn PlotSquared nicht installiert ist, gibt es keine Rechte-Prüfung!
-        // Ab hier: Funktionalität für alle Spieler
 
-        if (!(event.getRightClicked() instanceof ItemFrame)) return;
         ItemFrame frame = (ItemFrame) event.getRightClicked();
 
         if (p.isSneaking()) {

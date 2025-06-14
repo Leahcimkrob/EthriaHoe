@@ -10,40 +10,20 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.lang.reflect.Field;
 import java.util.List;
 
-
 public class EthriaHoe extends JavaPlugin {
     private static EthriaHoe instance;
     private boolean plotsquaredAvailable;
 
-
     @Override
     public void onEnable() {
         saveDefaultConfig();
-
-        // Aliase aus der Config lesen
-        List<String> aliases = getConfig().getStringList("command-aliases");
-        if (!aliases.isEmpty()) {
-            try {
-                Field bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
-                bukkitCommandMap.setAccessible(true);
-                SimpleCommandMap commandMap = (SimpleCommandMap) bukkitCommandMap.get(Bukkit.getServer());
-                Command cmd = getCommand("ethriahoe");
-                if (cmd != null) {
-                    cmd.setAliases(aliases);
-                    commandMap.register(getDescription().getName(), cmd);
-                }
-            } catch (Exception e) {
-                getLogger().warning("Konnte Aliase nicht dynamisch setzen: " + e.getMessage());
-            }
-        }
+        registerAliases();
         EthriaHoeCommand cmd = new EthriaHoeCommand();
         getCommand("ethriahoe").setExecutor(cmd);
         getCommand("ethriahoe").setTabCompleter(cmd);
 
-        String message = "";
         instance = this;
         plotsquaredAvailable = getServer().getPluginManager().getPlugin("PlotSquared") != null;
-        saveDefaultConfig();
 
         if (plotsquaredAvailable) {
             getServer().getPluginManager().registerEvents(new EthriaHoeListener(), this);
@@ -56,6 +36,24 @@ public class EthriaHoe extends JavaPlugin {
     @Override
     public void onDisable() {
         getLogger().info(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', getConfig().getString("prefix", "") + getConfig().getString("messages.plugin_disabled"))));
+    }
+
+    public void registerAliases() {
+        List<String> aliases = getConfig().getStringList("command-aliases");
+        if (!aliases.isEmpty()) {
+            try {
+                Field bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
+                bukkitCommandMap.setAccessible(true);
+                SimpleCommandMap commandMap = (SimpleCommandMap) bukkitCommandMap.get(Bukkit.getServer());
+                Command cmd = getCommand("ethriahoe");
+                if (cmd != null) {
+                    cmd.setAliases(aliases);
+                    commandMap.register(getDescription().getName(), cmd);
+                }
+            } catch (Exception e) {
+                getLogger().warning(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', getConfig().getString("prefix", "") + getConfig().getString("no_alias"))));
+            }
+        }
     }
 
     public static EthriaHoe getInstance() {

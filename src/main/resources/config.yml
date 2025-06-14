@@ -1,7 +1,8 @@
 prefix: "&8[&6Ethriahoe&8]&7 » "
 
 # Beliebiges Material wie "DIAMOND_HOE", "STICK", "CARROT_ON_A_STICK", etc.
-toggle_item: "WOODEN_HOE"
+toggle_item:
+  - WOODEN_HOE
 
 command-aliases:
   - frametool
@@ -29,4 +30,6 @@ messages:
   reload: "&4Die EthriaHoe-Konfiguration wurde neu geladen!"
   reload_no_perm: "Du hast keine Berechtigung, diesen Befehl auszuführen."
 
+  #Warnings
   no_plotsquard: "&4PlotSquared nicht gefunden! Plot-Funktionen sind deaktiviert."
+  no_alias: "Konnte Aliase nicht dynamisch setzen: "
