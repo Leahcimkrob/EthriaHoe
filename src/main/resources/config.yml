@@ -1,0 +1,19 @@
+prefix: "&8&l[&6Ethriahoe&8&l]&7&l»"
+
+allow_trusted: true
+allow_member: true
+
+messages:
+  not_on_plot: "§cDu kannst nur auf Plots Item Frames verändern!"
+  no_rights: "§cDu must Owner, Getrusted oder Member auf dem Plot sein!"
+
+  set_fixed: "&6Frame wurde auf %state% gesetzt."
+  set_visible: "&6Frame ist jetzt %state%."
+  state:
+    fixed: "fixiert"
+    unfixed: "nicht fixiert"
+    visible: "sichtbar"
+    invisible: "unsichtbar"
+
+  plugin_enable: "&bPlugin wurde aktiviert!"
+  plugin_disable:  "&cPlugin wurde deaktiviert!"
