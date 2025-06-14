@@ -1,5 +1,9 @@
 prefix: "&8&l[&6Ethriahoe&8&l]&7&l»"
 
+# Beliebiges Material wie "DIAMOND_HOE", "STICK", "CARROT_ON_A_STICK", etc.
+toggle_item: "WOODEN_HOE"
+
+# Einstellungen für Plotsquared
 allow_trusted: true
 allow_member: true
 
@@ -15,5 +19,5 @@ messages:
     visible: "sichtbar"
     invisible: "unsichtbar"
 
-  plugin_enable: "&bPlugin wurde aktiviert!"
-  plugin_disable:  "&cPlugin wurde deaktiviert!"
+  plugin_enabled: "&bPlugin wurde aktiviert!"
+  plugin_disabled:  "&cPlugin wurde deaktiviert!"

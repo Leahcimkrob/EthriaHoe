@@ -1,7 +1,8 @@
 name: EthriaHoe
 main: de.leahcimkrob.ethriahoe.EthriaHoe
-version: 1.0
-api-version: 1.19
+version: ${project.version}
+api-version: 1.20
+softdepend: [PlotSquared]
 author: Bloody_Mind
 description: Toggle ItemFrame properties (fixed/visible) with a hoe.
 permissions:
