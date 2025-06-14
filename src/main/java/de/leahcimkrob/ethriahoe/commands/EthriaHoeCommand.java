@@ -15,13 +15,17 @@ public class EthriaHoeCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        EthriaHoe plugin = EthriaHoe.getInstance();
+
         if (args.length > 0 && args[0].equalsIgnoreCase("reload")) {
             if (!sender.hasPermission("ethriahoe.admin")) {
-                sender.sendMessage(ChatColor.RED + "Du hast keine Berechtigung, diesen Befehl auszuführen.");
+                String noPermMsg = plugin.getConfig().getString("messages.reload_no_perm", "Du hast keine Berechtigung, diesen Befehl auszuführen.");
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', noPermMsg));
                 return true;
             }
-            EthriaHoe.getInstance().reloadConfig();
-            sender.sendMessage(ChatColor.GREEN + "Die EthriaHoe-Konfiguration wurde neu geladen!");
+            plugin.reloadConfig();
+            String reloadMsg = plugin.getConfig().getString("messages.reload", "&4Die EthriaHoe-Konfiguration wurde neu geladen!");
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', reloadMsg));
             return true;
         }
 
