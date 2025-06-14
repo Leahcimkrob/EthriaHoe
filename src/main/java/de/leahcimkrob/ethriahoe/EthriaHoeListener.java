@@ -2,6 +2,7 @@ package de.leahcimkrob.ethriahoe;
 
 import com.plotsquared.core.player.PlotPlayer;
 import com.plotsquared.core.plot.Plot;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.ItemFrame;
@@ -50,7 +51,7 @@ public class EthriaHoeListener implements Listener {
 
             if (plot == null) {
                 event.setCancelled(true);
-                p.sendMessage(prefix + config.getString("messages.not_on_plot", ""));
+                p.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + config.getString("messages.not_on_plot", "")));
                 return;
             }
 
@@ -61,12 +62,13 @@ public class EthriaHoeListener implements Listener {
             if (
                     plot.isOwner(uuid) ||
                             (plot.getTrusted().contains(uuid) && allowTrusted) ||
-                            (plot.getMembers().contains(uuid) && allowMember)
+                            (plot.getMembers().contains(uuid) && allowMember) ||
+                            (p.hasPermission("ethriahoe.toggle"))
             ) {
                 // Zugriff erlaubt, unten normal weiter
             } else {
                 event.setCancelled(true);
-                p.sendMessage(prefix + config.getString("messages.no_rights", ""));
+                p.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + config.getString("messages.no_rights", "")));
                 return;
             }
         }
@@ -83,7 +85,7 @@ public class EthriaHoeListener implements Listener {
                 String stateKey = frame.isFixed() ? "fixed" : "unfixed";
                 String state = config.getString("messages.state." + stateKey, stateKey);
                 String msg = prefix + config.getString("messages.set_fixed", "Frame wurde auf %state% gesetzt.").replace("%state%", state);
-                p.sendMessage(msg);
+                p.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
             }
         } else if (p.hasPermission("ethriahoe.toggleVisible")) {
             event.setCancelled(true);
@@ -91,7 +93,7 @@ public class EthriaHoeListener implements Listener {
             String stateKey = frame.isVisible() ? "visible" : "invisible";
             String state = config.getString("messages.state." + stateKey, stateKey);
             String msg = prefix + config.getString("messages.set_visible", "Frame ist jetzt %state%.").replace("%state%", state);
-            p.sendMessage(msg);
+            p.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
         }
     }
 }

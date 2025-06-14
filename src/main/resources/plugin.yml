@@ -5,7 +5,19 @@ api-version: 1.20
 softdepend: [PlotSquared]
 author: Bloody_Mind
 description: Toggle ItemFrame properties (fixed/visible) with a hoe.
+
+commands:
+  ethriahoe:
+    description: Hauptbefehl für EthriaHoe
+    permission: ethriahoe.admin
+
 permissions:
+  ethriahoe.admin:
+    description: "erlaubt das reloaden der Confdig"
+    default: op
+  ethriahoe.toggle:
+    description: "Erlaubt die Nutzung der EthriaHoe auf allen Plots (auch fremde)"
+    default: op
   ethriahoe.toggleFixed:
     description: "Erlaubt das Umschalten des Fixed-Status von Rahmen mit der Hoe"
     default: op

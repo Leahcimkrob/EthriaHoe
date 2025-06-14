@@ -1,28 +1,56 @@
 package de.leahcimkrob.ethriahoe;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.lang.reflect.Field;
+import java.util.List;
+
 
 public class EthriaHoe extends JavaPlugin {
     private static EthriaHoe instance;
     private boolean plotsquaredAvailable;
 
+
     @Override
     public void onEnable() {
+        saveDefaultConfig();
+
+        // Aliase aus der Config lesen
+        List<String> aliases = getConfig().getStringList("command-aliases");
+        if (!aliases.isEmpty()) {
+            try {
+                Field bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
+                bukkitCommandMap.setAccessible(true);
+                SimpleCommandMap commandMap = (SimpleCommandMap) bukkitCommandMap.get(Bukkit.getServer());
+                Command cmd = getCommand("ethriahoe");
+                if (cmd != null) {
+                    cmd.setAliases(aliases);
+                    commandMap.register(getDescription().getName(), cmd);
+                }
+            } catch (Exception e) {
+                getLogger().warning("Konnte Aliase nicht dynamisch setzen: " + e.getMessage());
+            }
+        }
+        String message = "";
         instance = this;
         plotsquaredAvailable = getServer().getPluginManager().getPlugin("PlotSquared") != null;
         saveDefaultConfig();
 
         if (plotsquaredAvailable) {
             getServer().getPluginManager().registerEvents(new EthriaHoeListener(), this);
-            getLogger().info(getConfig().getString("prefix", "") + getConfig().getString("messages.plugin_enabled"));
+            getLogger().info(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', getConfig().getString("prefix", "") + getConfig().getString("messages.plugin_enabled"))));
         } else {
-            getLogger().warning("[EthriaHoe] PlotSquared nicht gefunden! Plot-Funktionen sind deaktiviert.");
+            getLogger().warning(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', getConfig().getString("prefix", "") + getConfig().getString("no_plotsquared"))));
         }
     }
 
     @Override
     public void onDisable() {
-        getLogger().info(getConfig().getString("prefix", "") + getConfig().getString("messages.plugin_disabled"));
+        getLogger().info(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', getConfig().getString("prefix", "") + getConfig().getString("messages.plugin_disabled"))));
     }
 
     public static EthriaHoe getInstance() {

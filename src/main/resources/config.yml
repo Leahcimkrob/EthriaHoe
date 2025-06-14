@@ -1,7 +1,11 @@
-prefix: "&8&l[&6Ethriahoe&8&l]&7&l»"
+prefix: "&8[&6Ethriahoe&8]&7 » "
 
 # Beliebiges Material wie "DIAMOND_HOE", "STICK", "CARROT_ON_A_STICK", etc.
 toggle_item: "WOODEN_HOE"
+
+command-aliases:
+  - frametool
+  - hoe
 
 # Einstellungen für Plotsquared
 allow_trusted: true
@@ -21,3 +25,8 @@ messages:
 
   plugin_enabled: "&bPlugin wurde aktiviert!"
   plugin_disabled:  "&cPlugin wurde deaktiviert!"
+
+  reload: "&4Die EthriaHoe-Konfiguration wurde neu geladen!"
+  reload_no_perm: "Du hast keine Berechtigung, diesen Befehl auszuführen."
+
+  no_plotsquard: "&4PlotSquared nicht gefunden! Plot-Funktionen sind deaktiviert."
