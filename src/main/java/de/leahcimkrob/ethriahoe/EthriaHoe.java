@@ -17,7 +17,6 @@ public class EthriaHoe extends JavaPlugin {
     @Override
     public void onEnable() {
         saveDefaultConfig();
-        registerAliases();
         EthriaHoeCommand cmd = new EthriaHoeCommand();
         getCommand("ethriahoe").setExecutor(cmd);
         getCommand("ethriahoe").setTabCompleter(cmd);

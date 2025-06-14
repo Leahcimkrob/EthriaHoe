@@ -4,9 +4,10 @@ prefix: "&8[&6Ethriahoe&8]&7 » "
 toggle_item:
   - WOODEN_HOE
 
-command-aliases:
-  - frametool
-  - hoe
+# Futurefeature
+#command-aliases:
+#  - frametool
+#  - hoe
 
 # Einstellungen für Plotsquared
 allow_trusted: true
