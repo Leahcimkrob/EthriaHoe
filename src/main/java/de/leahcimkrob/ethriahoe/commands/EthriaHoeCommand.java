@@ -23,7 +23,7 @@ public class EthriaHoeCommand implements CommandExecutor, TabCompleter {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', noPermMsg));
                 return true;
             }
-            plugin.reloadConfig();
+            plugin.reloadConfig(); // Tatsächliches Reload!
             String reloadMsg = plugin.getConfig().getString("messages.reload", "&4Die EthriaHoe-Konfiguration wurde neu geladen!");
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', reloadMsg));
             return true;

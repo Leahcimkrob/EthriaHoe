@@ -32,9 +32,6 @@ public class EthriaHoeListener implements Listener {
         if (p.getInventory().getItemInMainHand().getType() != toggleItem)
             return;
 
-        // Prüfen ob Item stimmt
-        if (p.getInventory().getItemInMainHand().getType() != Material.WOODEN_HOE)
-            return;
 
         // Prüfen ob PlotSquared installiert ist
         if (EthriaHoe.getInstance().isPlotsquaredAvailable()) {

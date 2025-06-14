@@ -1,5 +1,6 @@
 package de.leahcimkrob.ethriahoe;
 
+import de.leahcimkrob.ethriahoe.commands.EthriaHoeCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -35,6 +36,10 @@ public class EthriaHoe extends JavaPlugin {
                 getLogger().warning("Konnte Aliase nicht dynamisch setzen: " + e.getMessage());
             }
         }
+        EthriaHoeCommand cmd = new EthriaHoeCommand();
+        getCommand("ethriahoe").setExecutor(cmd);
+        getCommand("ethriahoe").setTabCompleter(cmd);
+
         String message = "";
         instance = this;
         plotsquaredAvailable = getServer().getPluginManager().getPlugin("PlotSquared") != null;
