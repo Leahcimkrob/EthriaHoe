@@ -1,5 +1,6 @@
 ## Lizenz
 Dieses Projekt steht unter der MIT-Lizenz – siehe [LICENSE](./LICENSE) für Details.
+
 This project is licensed under the MIT License – see [LICENSE](./LICENSE) for details.
 
 
