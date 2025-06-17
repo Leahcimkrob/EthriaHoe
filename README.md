@@ -12,7 +12,7 @@ The default tool is: WOODEN_HOE
 Soft dependency: Plotsquared
 
 
-###Deutsch
+### Deutsch
 Mit dem Tool könnt ihr Bilderrahmen unsichtbar machen und fixieren.
 Tools können geändert werden und es sind auch mehrere Tools in der Config möglich. 
 Die Sprache kann komplett abgeändert werden.
