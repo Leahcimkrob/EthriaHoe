@@ -35,8 +35,8 @@ messages:
   no_worldguard_rights: "&cDu bist in dieser WorldGuard-Region weder Member noch Owner."
 
   # Warnings
-  no_plotsquard: "&4PlotSquared nicht gefunden! Plot-Funktionen sind deaktiviert."
-  plotsquard: "&4PlotSquared gefunden! Plot-Funktionen sind aktiviert."
+  no_plotsquared : "&4PlotSquared nicht gefunden! Plot-Funktionen sind deaktiviert."
+  plotsquared : "&4PlotSquared gefunden! Plot-Funktionen sind aktiviert."
   no_worldguard: "&4Worldguard nicht gefunden! Regions-Funktionen sind deaktiviert."
   worldguard: "&4Worldguard gefunden! Regions-Funktionen sind aktiviert."
 
