@@ -1,5 +1,6 @@
 package de.leahcimkrob.ethriahoe;
 
+import com.plotsquared.core.database.DBFunc;
 import com.plotsquared.core.player.PlotPlayer;
 import com.plotsquared.core.plot.Plot;
 import org.bukkit.ChatColor;
@@ -66,10 +67,10 @@ public class EthriaHoeListener implements Listener {
             UUID uuid = plotPlayer.getUUID();
             boolean allowTrusted = config.getBoolean("allow_trusted", true);
             boolean allowMember = config.getBoolean("allow_member", true);
-
             if (
                     plot.isOwner(uuid) ||
                             (plot.getTrusted().contains(uuid) && allowTrusted) ||
+                            (plot.getTrusted().contains(DBFunc.EVERYONE) && allowTrusted) ||
                             (plot.getMembers().contains(uuid) && allowMember) ||
                             (p.hasPermission("ethriahoe.toggle"))
             ) {
