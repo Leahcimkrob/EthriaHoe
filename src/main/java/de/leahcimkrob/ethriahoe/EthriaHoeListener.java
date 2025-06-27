@@ -74,6 +74,12 @@ public class EthriaHoeListener implements Listener {
                             (plot.getMembers().contains(uuid) && allowMember) ||
                             (p.hasPermission("ethriahoe.toggle"))
             ) {
+                // WorldGuard-Check: Ist der Spieler in einer Region Member/Owner?
+                if (!WorldGuardRegionChecker.isTrustedInAnyRegion(p, event.getRightClicked().getLocation())) {
+                    event.setCancelled(true);
+                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + config.getString("messages.no_worldguard_rights", "&cDu bist in dieser WorldGuard-Region weder Member noch Owner.")));
+                    return;
+                }
                 // Zugriff erlaubt, unten normal weiter
             } else {
                 event.setCancelled(true);

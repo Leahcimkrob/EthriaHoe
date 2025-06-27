@@ -27,8 +27,14 @@ public class EthriaHoe extends JavaPlugin {
         if (plotsquaredAvailable) {
             getServer().getPluginManager().registerEvents(new EthriaHoeListener(), this);
             getLogger().info(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', getConfig().getString("prefix", "") + getConfig().getString("messages.plugin_enabled"))));
+            getLogger().warning(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', getConfig().getString("prefix", "") + getConfig().getString("plotsquared"))));
         } else {
             getLogger().warning(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', getConfig().getString("prefix", "") + getConfig().getString("no_plotsquared"))));
+        }
+        if (WorldGuardRegionChecker.isWorldGuardPresent()) {
+            getLogger().warning(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', getConfig().getString("prefix", "") + getConfig().getString("worldguard"))));
+        } else {
+            getLogger().warning(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', getConfig().getString("prefix", "") + getConfig().getString("no_worldguard"))));
         }
     }
 
