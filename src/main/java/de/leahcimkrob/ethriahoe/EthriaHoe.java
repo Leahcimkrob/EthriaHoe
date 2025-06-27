@@ -5,6 +5,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.SimpleCommandMap;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.Field;
@@ -12,30 +14,48 @@ import java.util.List;
 
 public class EthriaHoe extends JavaPlugin {
     private static EthriaHoe instance;
-    private boolean plotsquaredAvailable;
+
+    public static EthriaHoe getInstance() {
+        return instance;
+    }
+
+    private boolean plotsquaredAvailable = false;
+    private boolean worldGuardAvailable = false;
 
     @Override
     public void onEnable() {
-        saveDefaultConfig();
-        EthriaHoeCommand cmd = new EthriaHoeCommand();
-        getCommand("ethriahoe").setExecutor(cmd);
-        getCommand("ethriahoe").setTabCompleter(cmd);
-
         instance = this;
-        plotsquaredAvailable = getServer().getPluginManager().getPlugin("PlotSquared") != null;
+        saveDefaultConfig();
+        FileConfiguration config = getConfig();
 
+        // Softdepend-Prüfung: PlotSquared
+        Plugin plotSquared = Bukkit.getPluginManager().getPlugin("PlotSquared");
+        plotsquaredAvailable = (plotSquared != null && plotSquared.isEnabled());
         if (plotsquaredAvailable) {
-            getServer().getPluginManager().registerEvents(new EthriaHoeListener(), this);
-            getLogger().info(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', getConfig().getString("prefix", "") + getConfig().getString("messages.plugin_enabled"))));
             getLogger().warning(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', getConfig().getString("prefix", "") + getConfig().getString("plotsquared"))));
         } else {
             getLogger().warning(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', getConfig().getString("prefix", "") + getConfig().getString("no_plotsquared"))));
         }
-        if (WorldGuardRegionChecker.isWorldGuardPresent()) {
+
+        // Softdepend-Prüfung: WorldGuard
+        Plugin worldGuard = Bukkit.getPluginManager().getPlugin("WorldGuard");
+        worldGuardAvailable = (worldGuard != null && worldGuard.isEnabled());
+        if (worldGuardAvailable) {
             getLogger().warning(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', getConfig().getString("prefix", "") + getConfig().getString("worldguard"))));
         } else {
             getLogger().warning(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', getConfig().getString("prefix", "") + getConfig().getString("no_worldguard"))));
         }
+
+        // Plugin-aktiviert-Meldung (unabhängig von Softdepends)
+        getLogger().info(ChatColor.stripColor(
+                ChatColor.translateAlternateColorCodes('&',
+                        config.getString("prefix", "") +
+                                config.getString("messages.plugin_enabled", "EthriaHoe wurde aktiviert!")
+                )
+        ));
+
+        // Listener registrieren
+        getServer().getPluginManager().registerEvents(new EthriaHoeListener(), this);
     }
 
     @Override
@@ -61,11 +81,11 @@ public class EthriaHoe extends JavaPlugin {
         }
     }
 
-    public static EthriaHoe getInstance() {
-        return instance;
-    }
+
 
     public boolean isPlotsquaredAvailable() {
         return plotsquaredAvailable;
     }
+
+    public boolean isWorldGuardAvailable() { return worldGuardAvailable; }
 }

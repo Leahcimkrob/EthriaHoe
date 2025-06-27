@@ -6,17 +6,11 @@ import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
+
 
 public class WorldGuardRegionChecker {
-
-    public static boolean isWorldGuardPresent() {
-        Plugin wg = Bukkit.getPluginManager().getPlugin("WorldGuard");
-        return wg != null && wg.isEnabled();
-    }
 
     /**
      * Prüft, ob der Spieler an der Location in mindestens einer WorldGuard-Region Member oder Owner ist.
