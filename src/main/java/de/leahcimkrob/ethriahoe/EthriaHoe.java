@@ -32,25 +32,25 @@ public class EthriaHoe extends JavaPlugin {
         Plugin plotSquared = Bukkit.getPluginManager().getPlugin("PlotSquared");
         plotsquaredAvailable = (plotSquared != null && plotSquared.isEnabled());
         if (plotsquaredAvailable) {
-            getLogger().warning(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', getConfig().getString("prefix", "") + getConfig().getString("plotsquared"))));
+            getLogger().warning(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', getConfig().getString("prefix", "") + getConfig().getString("messages.plotsquared"))));
         } else {
-            getLogger().warning(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', getConfig().getString("prefix", "") + getConfig().getString("no_plotsquared"))));
+            getLogger().warning(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', getConfig().getString("prefix", "") + getConfig().getString("messages.no_plotsquared"))));
         }
 
         // Softdepend-Prüfung: WorldGuard
         Plugin worldGuard = Bukkit.getPluginManager().getPlugin("WorldGuard");
         worldGuardAvailable = (worldGuard != null && worldGuard.isEnabled());
         if (worldGuardAvailable) {
-            getLogger().warning(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', getConfig().getString("prefix", "") + getConfig().getString("worldguard"))));
+            getLogger().warning(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', getConfig().getString("prefix", "") + getConfig().getString("messages.worldguard"))));
         } else {
-            getLogger().warning(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', getConfig().getString("prefix", "") + getConfig().getString("no_worldguard"))));
+            getLogger().warning(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', getConfig().getString("prefix", "") + getConfig().getString("messages.no_worldguard"))));
         }
 
         // Plugin-aktiviert-Meldung (unabhängig von Softdepends)
         getLogger().info(ChatColor.stripColor(
                 ChatColor.translateAlternateColorCodes('&',
                         config.getString("prefix", "") +
-                                config.getString("messages.plugin_enabled", "EthriaHoe wurde aktiviert!")
+                                config.getString("plugin_enabled", "EthriaHoe wurde aktiviert!")
                 )
         ));
 
@@ -87,5 +87,7 @@ public class EthriaHoe extends JavaPlugin {
         return plotsquaredAvailable;
     }
 
-    public boolean isWorldGuardAvailable() { return worldGuardAvailable; }
+    public boolean isWorldGuardAvailable() {
+        return worldGuardAvailable;
+    }
 }

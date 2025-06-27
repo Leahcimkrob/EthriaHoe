@@ -32,7 +32,7 @@ messages:
   reload_no_perm: "Du hast keine Berechtigung, diesen Befehl auszuführen."
 
   # Worldguard-Meldung
-  messages.no_worldguard_rights: "&cDu bist in dieser WorldGuard-Region weder Member noch Owner."
+  no_worldguard_rights: "&cDu bist in dieser WorldGuard-Region weder Member noch Owner."
 
   # Warnings
   no_plotsquard: "&4PlotSquared nicht gefunden! Plot-Funktionen sind deaktiviert."
