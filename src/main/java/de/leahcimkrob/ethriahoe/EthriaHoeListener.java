@@ -91,7 +91,14 @@ public class EthriaHoeListener implements Listener {
                 return;
             }
         }
-        // Wenn PlotSquared nicht installiert ist, gibt es keine Rechte-Prüfung!
+        else if (EthriaHoe.getInstance().isWorldGuardAvailable()) {
+            if (!WorldGuardRegionChecker.isTrustedInHighestPriorityRegion(p, event.getRightClicked().getLocation())) {
+                event.setCancelled(true);
+                p.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + config.getString("messages.no_worldguard_rights", "&cDu bist in dieser WorldGuard-Region weder Member noch Owner.")));
+                return;
+            }
+        }
+// Ansonsten: keine Prüfung, alles erlaubt
 
         ItemFrame frame = (ItemFrame) event.getRightClicked();
 
