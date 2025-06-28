@@ -5,7 +5,6 @@ import com.plotsquared.core.database.DBFunc;
 import com.plotsquared.core.player.PlotPlayer;
 import com.plotsquared.core.plot.Plot;
 import com.plotsquared.core.plot.PlotArea;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -44,14 +43,15 @@ public class EthriaHoeListener implements Listener {
             allowedItems.add(Material.WOODEN_HOE);
         }
 
-        if (!(event.getRightClicked() instanceof ItemFrame)) return;
+        if (!(event.getRightClicked() instanceof ItemFrame)) {
+            return;
+        }
         if (!allowedItems.contains(p.getInventory().getItemInMainHand().getType())) {
             return;
         }
 
         // User hat Bypass-Permission
         if (p.hasPermission("ethriahoe.toggle.admin")) {
-            Bukkit.getLogger().info("Bypass-Admin, Prüfung übersprungen");
             // Keine weiteren Prüfungen nötig
         } else if (EthriaHoe.getInstance().isPlotsquaredAvailable()) {
             PlotPlayer<?> plotPlayer = PlotPlayer.from(p);
@@ -67,14 +67,13 @@ public class EthriaHoeListener implements Listener {
             PlotArea plotArea = PlotSquared.get().getPlotAreaManager().getPlotArea(plotLoc);
 
             if (plotArea != null) {
-                // --- Plot-Welt: Plotsquared-Prüfung + ggf. WorldGuard
+                 // --- Plot-Welt: Plotsquared-Prüfung + ggf. WorldGuard
                 Plot plot = Plot.getPlot(plotLoc);
                 if (plot == null) {
                     event.setCancelled(true);
                     p.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + config.getString("messages.not_on_plot", "")));
                     return;
                 }
-
                 UUID uuid = plotPlayer.getUUID();
                 boolean allowTrusted = config.getBoolean("allow_trusted", true);
                 boolean allowMember = config.getBoolean("allow_member", true);
@@ -88,7 +87,7 @@ public class EthriaHoeListener implements Listener {
                     if (EthriaHoe.getInstance().isWorldGuardAvailable() &&
                             !WorldGuardRegionChecker.isTrustedInHighestPriorityRegion(p, event.getRightClicked().getLocation()) &&
                             plot.getTrusted().contains(DBFunc.EVERYONE))
-                            {
+                    {
                         event.setCancelled(true);
                         p.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + config.getString("messages.no_worldguard_rights", "&cDu bist in dieser WorldGuard-Region weder Member noch Owner.")));
                         return;
@@ -101,7 +100,8 @@ public class EthriaHoeListener implements Listener {
                 }
             } else if (EthriaHoe.getInstance().isWorldGuardAvailable()) {
                 // --- KEINE Plot-Welt, aber WorldGuard installiert!
-                if (!WorldGuardRegionChecker.isTrustedInHighestPriorityRegion(p, event.getRightClicked().getLocation())) {
+                boolean trusted = WorldGuardRegionChecker.isTrustedInHighestPriorityRegion(p, event.getRightClicked().getLocation());
+                if (!trusted) {
                     event.setCancelled(true);
                     p.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + config.getString("messages.no_worldguard_rights", "&cDu bist in dieser WorldGuard-Region weder Member noch Owner.")));
                     return;
@@ -110,11 +110,13 @@ public class EthriaHoeListener implements Listener {
             // sonst: keine Prüfung, alles erlaubt!
         } else if (EthriaHoe.getInstance().isWorldGuardAvailable()) {
             // Plotsquared nicht installiert, aber WorldGuard installiert
-            if (!WorldGuardRegionChecker.isTrustedInHighestPriorityRegion(p, event.getRightClicked().getLocation())) {
+            boolean trusted = WorldGuardRegionChecker.isTrustedInHighestPriorityRegion(p, event.getRightClicked().getLocation());
+            if (!trusted) {
                 event.setCancelled(true);
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + config.getString("messages.no_worldguard_rights", "&cDu bist in dieser WorldGuard-Region weder Member noch Owner.")));
                 return;
             }
+        } else {
         }
         // Ansonsten: keine Prüfung, alles erlaubt
 
@@ -128,6 +130,7 @@ public class EthriaHoeListener implements Listener {
                 String state = config.getString("messages.state." + stateKey, stateKey);
                 String msg = prefix + config.getString("messages.set_fixed", "Frame wurde auf %state% gesetzt.").replace("%state%", state);
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
+            } else {
             }
         } else if (p.hasPermission("ethriahoe.toggle.visible")) {
             event.setCancelled(true);
@@ -136,6 +139,7 @@ public class EthriaHoeListener implements Listener {
             String state = config.getString("messages.state." + stateKey, stateKey);
             String msg = prefix + config.getString("messages.set_visible", "Frame ist jetzt %state%.").replace("%state%", state);
             p.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
+        } else {
         }
     }
 }

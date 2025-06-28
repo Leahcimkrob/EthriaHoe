@@ -9,7 +9,6 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import java.util.Set;
 import java.util.UUID;
 
 public class WorldGuardRegionChecker {
@@ -17,10 +16,10 @@ public class WorldGuardRegionChecker {
     public static boolean isTrustedInHighestPriorityRegion(Player player, Location location) {
         World world = BukkitAdapter.adapt(location.getWorld());
         RegionManager regionManager = WorldGuard.getInstance().getPlatform().getRegionContainer().get(world);
-        if (regionManager == null) return true;
+        if (regionManager == null) return false;
 
         ApplicableRegionSet regions = regionManager.getApplicableRegions(BukkitAdapter.asBlockVector(location));
-        if (regions.size() == 0) return true;
+        if (regions.size() == 0) return false;
 
         ProtectedRegion highest = null;
         for (ProtectedRegion region : regions) {
@@ -28,25 +27,12 @@ public class WorldGuardRegionChecker {
                 highest = region;
             }
         }
-        if (highest == null) return true;
+        if (highest == null) return false;
 
-        // DEBUG
-        System.out.println("[EthriaHoe-DEBUG] Region(en) an der Position:");
-        for (ProtectedRegion region : regions) {
-            System.out.println("  - " + region.getId() + " (Prio: " + region.getPriority() + ")");
-        }
-        System.out.println("[EthriaHoe-DEBUG] Höchste Region: " + highest.getId());
-
-        if (highest.getId().equalsIgnoreCase("__global__")) {
-            System.out.println("[EthriaHoe-DEBUG] In __global__ -> Rückgabe: false");
-            return false;
-        }
+        String regionId = highest.getId().replace("_", "").toLowerCase();
+        if (regionId.equals("global")) return false;
 
         UUID uuid = player.getUniqueId();
-        boolean isOwner = highest.getOwners().getUniqueIds().contains(uuid);
-        boolean isMember = highest.getMembers().getUniqueIds().contains(uuid);
-
-        System.out.println("[EthriaHoe-DEBUG] Owner? " + isOwner + " | Member? " + isMember);
-        return isOwner || isMember;
+        return highest.getOwners().getUniqueIds().contains(uuid) || highest.getMembers().getUniqueIds().contains(uuid);
     }
 }
