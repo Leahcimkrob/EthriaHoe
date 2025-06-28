@@ -1,6 +1,5 @@
 package de.leahcimkrob.ethriahoe;
 
-
 import com.plotsquared.core.database.DBFunc;
 import com.plotsquared.core.player.PlotPlayer;
 import com.plotsquared.core.plot.Plot;
@@ -51,7 +50,7 @@ public class EthriaHoeListener implements Listener {
         }
 
         // User hat Bypass-Permission
-        if (p.hasPermission("ethriahoe.toggleAdmin")) {
+        if (p.hasPermission("ethriahoe.toggle.admin")) {
         // Prüfen ob PlotSquared installiert ist
         } else if (EthriaHoe.getInstance().isPlotsquaredAvailable()) {
             PlotPlayer<?> plotPlayer = PlotPlayer.from(p);
@@ -104,7 +103,7 @@ public class EthriaHoeListener implements Listener {
         ItemFrame frame = (ItemFrame) event.getRightClicked();
 
         if (p.isSneaking()) {
-            if (p.hasPermission("ethriahoe.toggleFixed")) {
+            if (p.hasPermission("ethriahoe.toggle.fixed")) {
                 event.setCancelled(true);
                 frame.setFixed(!frame.isFixed());
                 String stateKey = frame.isFixed() ? "fixed" : "unfixed";
@@ -112,7 +111,7 @@ public class EthriaHoeListener implements Listener {
                 String msg = prefix + config.getString("messages.set_fixed", "Frame wurde auf %state% gesetzt.").replace("%state%", state);
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
             }
-        } else if (p.hasPermission("ethriahoe.toggleVisible")) {
+        } else if (p.hasPermission("ethriahoe.togglefvisible")) {
             event.setCancelled(true);
             frame.setVisible(!frame.isVisible());
             String stateKey = frame.isVisible() ? "visible" : "invisible";
