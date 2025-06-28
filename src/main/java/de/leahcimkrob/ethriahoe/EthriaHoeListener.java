@@ -25,7 +25,7 @@ public class EthriaHoeListener implements Listener {
         FileConfiguration config = EthriaHoe.getInstance().getConfig();
         String prefix = config.getString("prefix", "");
 
-        // Mehrere erlaubte Items aus der Config laden
+        // Erlaubte Items laden
         List<String> toggleItemsConfig = config.getStringList("toggle_items");
         Set<Material> allowedItems = toggleItemsConfig.stream()
                 .map(name -> {
@@ -39,7 +39,6 @@ public class EthriaHoeListener implements Listener {
                 .collect(Collectors.toSet());
 
         if (allowedItems.isEmpty()) {
-            // Fallback: WOODEN_HOE
             allowedItems.add(Material.WOODEN_HOE);
         }
 
@@ -50,10 +49,14 @@ public class EthriaHoeListener implements Listener {
             return;
         }
 
-        // User hat Bypass-Permission
+        // Admins: Immer erlauben!
         if (p.hasPermission("ethriahoe.toggle.admin")) {
-            // Keine weiteren Prüfungen nötig
-        } else if (EthriaHoe.getInstance().isPlotsquaredAvailable()) {
+            handleToggle(event, p, config, prefix);
+            return;
+        }
+
+        // Plotsquared-Prüfung
+        if (EthriaHoe.getInstance().isPlotsquaredAvailable()) {
             PlotPlayer<?> plotPlayer = PlotPlayer.from(p);
             org.bukkit.Location bukkitLoc = event.getRightClicked().getLocation();
             com.plotsquared.core.location.Location plotLoc = com.plotsquared.core.location.Location.at(
@@ -63,11 +66,9 @@ public class EthriaHoeListener implements Listener {
                     bukkitLoc.getBlockZ()
             );
 
-            // PlotArea für die aktuelle Location holen (Kompatibel mit PlotSquared 7.5.x)
             PlotArea plotArea = PlotSquared.get().getPlotAreaManager().getPlotArea(plotLoc);
 
             if (plotArea != null) {
-                 // --- Plot-Welt: Plotsquared-Prüfung + ggf. WorldGuard
                 Plot plot = Plot.getPlot(plotLoc);
                 if (plot == null) {
                     event.setCancelled(true);
@@ -99,7 +100,6 @@ public class EthriaHoeListener implements Listener {
                     return;
                 }
             } else if (EthriaHoe.getInstance().isWorldGuardAvailable()) {
-                // --- KEINE Plot-Welt, aber WorldGuard installiert!
                 boolean trusted = WorldGuardRegionChecker.isTrustedInHighestPriorityRegion(p, event.getRightClicked().getLocation());
                 if (!trusted) {
                     event.setCancelled(true);
@@ -107,21 +107,21 @@ public class EthriaHoeListener implements Listener {
                     return;
                 }
             }
-            // sonst: keine Prüfung, alles erlaubt!
         } else if (EthriaHoe.getInstance().isWorldGuardAvailable()) {
-            // Plotsquared nicht installiert, aber WorldGuard installiert
             boolean trusted = WorldGuardRegionChecker.isTrustedInHighestPriorityRegion(p, event.getRightClicked().getLocation());
             if (!trusted) {
                 event.setCancelled(true);
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + config.getString("messages.no_worldguard_rights", "&cDu bist in dieser WorldGuard-Region weder Member noch Owner.")));
                 return;
             }
-        } else {
         }
-        // Ansonsten: keine Prüfung, alles erlaubt
+        // Sonst: keine Prüfung, alles erlaubt
 
+        handleToggle(event, p, config, prefix);
+    }
+
+    private void handleToggle(PlayerInteractEntityEvent event, Player p, FileConfiguration config, String prefix) {
         ItemFrame frame = (ItemFrame) event.getRightClicked();
-
         if (p.isSneaking()) {
             if (p.hasPermission("ethriahoe.toggle.fixed")) {
                 event.setCancelled(true);
@@ -130,7 +130,6 @@ public class EthriaHoeListener implements Listener {
                 String state = config.getString("messages.state." + stateKey, stateKey);
                 String msg = prefix + config.getString("messages.set_fixed", "Frame wurde auf %state% gesetzt.").replace("%state%", state);
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
-            } else {
             }
         } else if (p.hasPermission("ethriahoe.toggle.visible")) {
             event.setCancelled(true);
@@ -139,7 +138,6 @@ public class EthriaHoeListener implements Listener {
             String state = config.getString("messages.state." + stateKey, stateKey);
             String msg = prefix + config.getString("messages.set_visible", "Frame ist jetzt %state%.").replace("%state%", state);
             p.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
-        } else {
         }
     }
 }
