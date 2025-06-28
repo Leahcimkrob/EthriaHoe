@@ -1,5 +1,6 @@
 package de.leahcimkrob.ethriahoe;
 
+
 import com.plotsquared.core.database.DBFunc;
 import com.plotsquared.core.player.PlotPlayer;
 import com.plotsquared.core.plot.Plot;
@@ -17,8 +18,11 @@ import java.util.stream.Collectors;
 
 public class EthriaHoeListener implements Listener {
 
+
     @EventHandler(ignoreCancelled = true)
     public void onFrameModify(PlayerInteractEntityEvent event) {
+
+
         Player p = event.getPlayer();
         FileConfiguration config = EthriaHoe.getInstance().getConfig();
         String prefix = config.getString("prefix", "");
@@ -74,8 +78,8 @@ public class EthriaHoeListener implements Listener {
                             (plot.getMembers().contains(uuid) && allowMember) ||
                             (p.hasPermission("ethriahoe.toggle"))
             ) {
-                // WorldGuard-Check: Ist der Spieler in einer Region Member/Owner?
-                if (!WorldGuardRegionChecker.isTrustedInAnyRegion(p, event.getRightClicked().getLocation())) {
+                // WorldGuard-Check: Ist der Spieler in der Region mit der höchsten Priorität Member/Owner?
+                if (!WorldGuardRegionChecker.isTrustedInHighestPriorityRegion(p, event.getRightClicked().getLocation())) {
                     event.setCancelled(true);
                     p.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + config.getString("messages.no_worldguard_rights", "&cDu bist in dieser WorldGuard-Region weder Member noch Owner.")));
                     return;
@@ -83,7 +87,7 @@ public class EthriaHoeListener implements Listener {
                 // Zugriff erlaubt, unten normal weiter
             } else {
                 event.setCancelled(true);
-                p.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + config.getString("messages.no_rights", "")));
+                p.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + config.getString("messages.no_plotsquared_rights", "")));
                 return;
             }
         }

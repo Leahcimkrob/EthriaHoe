@@ -13,23 +13,23 @@ import org.bukkit.entity.Player;
 public class WorldGuardRegionChecker {
 
     /**
-     * Prüft, ob der Spieler an der Location in mindestens einer WorldGuard-Region Member oder Owner ist.
+     * Prüft, ob der Spieler an der Location in der WorldGuard-Region Member oder Owner ist, welche die höchste Priorität hat.
      * Gibt true zurück, wenn der Spieler in einer Region Member/Owner ist, andernfalls false.
      */
-    public static boolean isTrustedInAnyRegion(Player player, Location location) {
+    public static boolean isTrustedInHighestPriorityRegion(Player player, Location location) {
         World world = BukkitAdapter.adapt(location.getWorld());
         RegionManager regionManager = WorldGuard.getInstance().getPlatform().getRegionContainer().get(world);
-        if (regionManager == null) return true; // Keine Regionsverwaltung im Welt -> Zugriff erlauben
-
+        if (regionManager == null) return true;
         ApplicableRegionSet regions = regionManager.getApplicableRegions(BukkitAdapter.asBlockVector(location));
-        if (regions.size() == 0) return true; // Keine Region -> Zugriff erlauben
-
+        if (regions.size() == 0) return true;
         String playerName = player.getName();
+        ProtectedRegion highest = null;
         for (ProtectedRegion region : regions) {
-            if (region.isOwner(playerName) || region.isMember(playerName)) {
-                return true; // Mindestens eine Region erlaubt Zugriff
+            if (highest == null || region.getPriority() > highest.getPriority()) {
+                highest = region;
             }
         }
-        return false; // In keiner Region Member/Owner
+        if (highest == null) return false;
+        return highest.isOwner(playerName) || highest.isMember(playerName);
     }
 }
