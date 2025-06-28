@@ -111,7 +111,7 @@ public class EthriaHoeListener implements Listener {
                 String msg = prefix + config.getString("messages.set_fixed", "Frame wurde auf %state% gesetzt.").replace("%state%", state);
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
             }
-        } else if (p.hasPermission("ethriahoe.togglefvisible")) {
+        } else if (p.hasPermission("ethriahoe.toggle.visible")) {
             event.setCancelled(true);
             frame.setVisible(!frame.isVisible());
             String stateKey = frame.isVisible() ? "visible" : "invisible";
