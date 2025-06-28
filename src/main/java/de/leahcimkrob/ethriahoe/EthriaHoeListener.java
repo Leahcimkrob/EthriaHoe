@@ -50,8 +50,10 @@ public class EthriaHoeListener implements Listener {
             return;
         }
 
+        // User hat Bypass-Permission
+        if (p.hasPermission("ethriahoe.toggleAdmin")) {
         // Prüfen ob PlotSquared installiert ist
-        if (EthriaHoe.getInstance().isPlotsquaredAvailable()) {
+        } else if (EthriaHoe.getInstance().isPlotsquaredAvailable()) {
             PlotPlayer<?> plotPlayer = PlotPlayer.from(p);
             org.bukkit.Location bukkitLoc = event.getRightClicked().getLocation();
             com.plotsquared.core.location.Location plotLoc = com.plotsquared.core.location.Location.at(
@@ -75,8 +77,7 @@ public class EthriaHoeListener implements Listener {
                     plot.isOwner(uuid) ||
                             (plot.getTrusted().contains(uuid) && allowTrusted) ||
                             (plot.getTrusted().contains(DBFunc.EVERYONE) && allowTrusted) ||
-                            (plot.getMembers().contains(uuid) && allowMember) ||
-                            (p.hasPermission("ethriahoe.toggle"))
+                            (plot.getMembers().contains(uuid) && allowMember)
             ) {
                 // WorldGuard-Check: Ist der Spieler in der Region mit der höchsten Priorität Member/Owner?
                 if (!WorldGuardRegionChecker.isTrustedInHighestPriorityRegion(p, event.getRightClicked().getLocation())) {
@@ -98,7 +99,7 @@ public class EthriaHoeListener implements Listener {
                 return;
             }
         }
-// Ansonsten: keine Prüfung, alles erlaubt
+        // Ansonsten: keine Prüfung, alles erlaubt
 
         ItemFrame frame = (ItemFrame) event.getRightClicked();
 

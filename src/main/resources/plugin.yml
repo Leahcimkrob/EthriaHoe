@@ -15,8 +15,8 @@ permissions:
   ethriahoe.admin:
     description: "erlaubt das reloaden der Confdig"
     default: op
-  ethriahoe.toggle:
-    description: "Erlaubt die Nutzung der EthriaHoe auf allen Plots (auch fremde)"
+  ethriahoe.toggleAdmin:
+    description: "Erlaubt die Nutzung der EthriaHoe auf allen Plots, Straßen und Worldguard-Regionen (auch fremde)"
     default: op
   ethriahoe.toggleFixed:
     description: "Erlaubt das Umschalten des Fixed-Status von Rahmen mit der Hoe"
