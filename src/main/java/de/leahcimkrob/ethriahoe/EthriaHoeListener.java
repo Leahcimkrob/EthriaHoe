@@ -1,8 +1,11 @@
 package de.leahcimkrob.ethriahoe;
 
+import com.plotsquared.core.PlotSquared;
 import com.plotsquared.core.database.DBFunc;
 import com.plotsquared.core.player.PlotPlayer;
 import com.plotsquared.core.plot.Plot;
+import com.plotsquared.core.plot.PlotArea;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -17,11 +20,8 @@ import java.util.stream.Collectors;
 
 public class EthriaHoeListener implements Listener {
 
-
     @EventHandler(ignoreCancelled = true)
     public void onFrameModify(PlayerInteractEntityEvent event) {
-
-
         Player p = event.getPlayer();
         FileConfiguration config = EthriaHoe.getInstance().getConfig();
         String prefix = config.getString("prefix", "");
@@ -51,7 +51,8 @@ public class EthriaHoeListener implements Listener {
 
         // User hat Bypass-Permission
         if (p.hasPermission("ethriahoe.toggle.admin")) {
-        // Prüfen ob PlotSquared installiert ist
+            Bukkit.getLogger().info("Bypass-Admin, Prüfung übersprungen");
+            // Keine weiteren Prüfungen nötig
         } else if (EthriaHoe.getInstance().isPlotsquaredAvailable()) {
             PlotPlayer<?> plotPlayer = PlotPlayer.from(p);
             org.bukkit.Location bukkitLoc = event.getRightClicked().getLocation();
@@ -61,37 +62,54 @@ public class EthriaHoeListener implements Listener {
                     bukkitLoc.getBlockY(),
                     bukkitLoc.getBlockZ()
             );
-            Plot plot = Plot.getPlot(plotLoc);
 
-            if (plot == null) {
-                event.setCancelled(true);
-                p.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + config.getString("messages.not_on_plot", "")));
-                return;
-            }
+            // PlotArea für die aktuelle Location holen (Kompatibel mit PlotSquared 7.5.x)
+            PlotArea plotArea = PlotSquared.get().getPlotAreaManager().getPlotArea(plotLoc);
 
-            UUID uuid = plotPlayer.getUUID();
-            boolean allowTrusted = config.getBoolean("allow_trusted", true);
-            boolean allowMember = config.getBoolean("allow_member", true);
-            if (
-                    plot.isOwner(uuid) ||
-                            (plot.getTrusted().contains(uuid) && allowTrusted) ||
-                            (plot.getTrusted().contains(DBFunc.EVERYONE) && allowTrusted) ||
-                            (plot.getMembers().contains(uuid) && allowMember)
-            ) {
-                // WorldGuard-Check: Ist der Spieler in der Region mit der höchsten Priorität Member/Owner?
+            if (plotArea != null) {
+                // --- Plot-Welt: Plotsquared-Prüfung + ggf. WorldGuard
+                Plot plot = Plot.getPlot(plotLoc);
+                if (plot == null) {
+                    event.setCancelled(true);
+                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + config.getString("messages.not_on_plot", "")));
+                    return;
+                }
+
+                UUID uuid = plotPlayer.getUUID();
+                boolean allowTrusted = config.getBoolean("allow_trusted", true);
+                boolean allowMember = config.getBoolean("allow_member", true);
+                if (
+                        plot.isOwner(uuid) ||
+                                (plot.getTrusted().contains(uuid) && allowTrusted) ||
+                                (plot.getTrusted().contains(DBFunc.EVERYONE) && allowTrusted) ||
+                                (plot.getMembers().contains(uuid) && allowMember)
+                ) {
+                    // WorldGuard-Check: Ist der Spieler in der Region mit der höchsten Priorität Member/Owner?
+                    if (EthriaHoe.getInstance().isWorldGuardAvailable() &&
+                            !WorldGuardRegionChecker.isTrustedInHighestPriorityRegion(p, event.getRightClicked().getLocation()) &&
+                            plot.getTrusted().contains(DBFunc.EVERYONE))
+                            {
+                        event.setCancelled(true);
+                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + config.getString("messages.no_worldguard_rights", "&cDu bist in dieser WorldGuard-Region weder Member noch Owner.")));
+                        return;
+                    }
+                    // Zugriff erlaubt, unten normal weiter
+                } else {
+                    event.setCancelled(true);
+                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + config.getString("messages.no_plotsquared_rights", "")));
+                    return;
+                }
+            } else if (EthriaHoe.getInstance().isWorldGuardAvailable()) {
+                // --- KEINE Plot-Welt, aber WorldGuard installiert!
                 if (!WorldGuardRegionChecker.isTrustedInHighestPriorityRegion(p, event.getRightClicked().getLocation())) {
                     event.setCancelled(true);
                     p.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + config.getString("messages.no_worldguard_rights", "&cDu bist in dieser WorldGuard-Region weder Member noch Owner.")));
                     return;
                 }
-                // Zugriff erlaubt, unten normal weiter
-            } else {
-                event.setCancelled(true);
-                p.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + config.getString("messages.no_plotsquared_rights", "")));
-                return;
             }
-        }
-        else if (EthriaHoe.getInstance().isWorldGuardAvailable()) {
+            // sonst: keine Prüfung, alles erlaubt!
+        } else if (EthriaHoe.getInstance().isWorldGuardAvailable()) {
+            // Plotsquared nicht installiert, aber WorldGuard installiert
             if (!WorldGuardRegionChecker.isTrustedInHighestPriorityRegion(p, event.getRightClicked().getLocation())) {
                 event.setCancelled(true);
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + config.getString("messages.no_worldguard_rights", "&cDu bist in dieser WorldGuard-Region weder Member noch Owner.")));
