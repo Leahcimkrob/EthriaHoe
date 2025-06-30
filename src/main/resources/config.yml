@@ -9,24 +9,24 @@ toggle_item:
 #  - frametool
 #  - hoe
 
-# Einstellungen für Plotsquared
+# Einstellungen für PlotSquared
 allow_trusted: true
 allow_member: true
 
 messages:
-  not_on_plot: "§cDu kannst nur auf Plots Item Frames verändern!"
+  not_on_plot: "§cDu kannst nur auf Plots Item-Frames verändern!"
   no_plotsquared_rights: "§cDu must Owner, Getrusted oder Member auf dem Plot sein!"
 
-  set_fixed: "&6Frame wurde auf %state% gesetzt."
-  set_visible: "&6Frame ist jetzt %state%."
+  set_fixed: "&6Item-Frame wurde auf %state% gesetzt."
+  set_visible: "&6Item-rame ist jetzt %state%."
   state:
     fixed: "fixiert"
     unfixed: "nicht fixiert"
     visible: "sichtbar"
     invisible: "unsichtbar"
 
-  plugin_enabled: "&bPlugin wurde aktiviert!"
-  plugin_disabled:  "&cPlugin wurde deaktiviert!"
+  plugin_enabled: "&bEthriaHoe-Plugin wurde aktiviert!"
+  plugin_disabled:  "&cEthriaHoe-Plugin wurde deaktiviert!"
 
   reload: "&4Die EthriaHoe-Konfiguration wurde neu geladen!"
   reload_no_perm: "Du hast keine Berechtigung, diesen Befehl auszuführen."
@@ -35,9 +35,9 @@ messages:
   no_worldguard_rights: "&cDu bist in dieser WorldGuard-Region weder Member noch Owner."
 
   # Warnings
-  no_plotsquared : "&4PlotSquared nicht gefunden! Plot-Funktionen sind deaktiviert."
-  plotsquared : "&4PlotSquared gefunden! Plot-Funktionen sind aktiviert."
-  no_worldguard: "&4Worldguard nicht gefunden! Regions-Funktionen sind deaktiviert."
+  no_plotsquared : "&4PlotSquared nicht gefunden! Plotfunktionen sind deaktiviert."
+  plotsquared : "&4PlotSquared gefunden! Plotfunktionen sind aktiviert."
+  no_worldguard: "&4Worldguard nicht gefunden! Regions-funktionen sind deaktiviert."
   worldguard: "&4Worldguard gefunden! Regions-Funktionen sind aktiviert."
 
   no_alias: "Konnte Aliase nicht dynamisch setzen: "
