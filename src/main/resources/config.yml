@@ -15,7 +15,7 @@ allow_member: true
 
 messages:
   not_on_plot: "§cDu kannst nur auf Plots Item-Frames verändern!"
-  no_plotsquared_rights: "§cDu must Owner, Getrusted oder Member auf dem Plot sein!"
+  no_plotsquared_rights: "§cNur der Besitzer, ein Vertrauter oder ein Mitglied kann diese Aktion ausführen."
 
   set_fixed: "&6Item-Frame wurde auf %state% gesetzt."
   set_visible: "&6Item-rame ist jetzt %state%."
@@ -32,7 +32,7 @@ messages:
   reload_no_perm: "Du hast keine Berechtigung, diesen Befehl auszuführen."
 
   # Worldguard-Meldung
-  no_worldguard_rights: "&cDu bist in dieser WorldGuard-Region weder Member noch Owner."
+  no_worldguard_rights: "&cDu bist in dieser WorldGuard-Region weder Besitzer noch Mitglied."
 
   # Warnings
   no_plotsquared : "&4PlotSquared nicht gefunden! Plotfunktionen sind deaktiviert."
