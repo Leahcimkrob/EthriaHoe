@@ -37,7 +37,7 @@ messages:
   # Warnings
   no_plotsquared : "&4PlotSquared nicht gefunden! Plotfunktionen sind deaktiviert."
   plotsquared : "&4PlotSquared gefunden! Plotfunktionen sind aktiviert."
-  no_worldguard: "&4Worldguard nicht gefunden! Regions-funktionen sind deaktiviert."
+  no_worldguard: "&4Worldguard nicht gefunden! Regions-Funktionen sind deaktiviert."
   worldguard: "&4Worldguard gefunden! Regions-Funktionen sind aktiviert."
 
   no_alias: "Konnte Aliase nicht dynamisch setzen: "
