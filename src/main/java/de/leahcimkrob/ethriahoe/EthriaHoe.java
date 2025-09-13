@@ -26,7 +26,14 @@ public class EthriaHoe extends JavaPlugin {
     public void onEnable() {
         instance = this;
         saveDefaultConfig();
+        getConfig().options().copyDefaults(true);
+        saveConfig();
         FileConfiguration config = getConfig();
+
+        // Command-Registrierung für Executor und TabCompleter
+        EthriaHoeCommand command = new EthriaHoeCommand();
+        getCommand("ethriahoe").setExecutor(command);
+        getCommand("ethriahoe").setTabCompleter(command);
 
         // Softdepend-Prüfung: PlotSquared
         Plugin plotSquared = Bukkit.getPluginManager().getPlugin("PlotSquared");

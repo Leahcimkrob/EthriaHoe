@@ -1,7 +1,7 @@
 name: EthriaHoe
 main: de.leahcimkrob.ethriahoe.EthriaHoe
 version: ${project.version}
-api-version: 1.20
+api-version: 1.21.8
 softdepend: [PlotSquared, Worldguard]
 author: Bloody_Mind
 description: Toggle ItemFrame properties (fixed/visible) with a hoe.
@@ -10,6 +10,8 @@ commands:
   ethriahoe:
     description: Hauptbefehl für EthriaHoe
     permission: ethriahoe.admin
+    usage: /ethriahoe reload | /ethriahoe view <distanz>
+    aliases: []
 
 permissions:
   ethriahoe.admin:
@@ -23,4 +25,7 @@ permissions:
     default: op
   ethriahoe.toggle.visible:
     description: "Erlaubt das Umschalten der Sichtbarkeit von Rahmen mit der Hoe"
+    default: op
+  ethriahoe.view:
+    description: "Erlaubt das Anzeigen von Partikeleffekten an unsichtbaren ItemFrames per /ethriahoe view"
     default: op

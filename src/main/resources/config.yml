@@ -13,9 +13,24 @@ toggle_item:
 allow_trusted: true
 allow_member: true
 
+view_particle:
+  duration: 3 # Dauer in Sekunden, wie lange die Partikel angezeigt werden
+  type: HAPPY_VILLAGER # https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Particle.html
+  max_distance: 30 # Maximale erlaubte Distanz für den view-Befehl
+  amount: 4 # Anzahl der Partikel pro Frame
+  force: true # Partikel unabhängig von den Client-Einstellungen anzeigen
+
 messages:
   not_on_plot: "§cDu kannst nur auf Plots Item-Frames verändern!"
   no_plotsquared_rights: "§cNur der Besitzer, ein Vertrauter oder ein Mitglied kann diese Aktion ausführen."
+
+  view_player_only: "&cNur Spieler können diesen Befehl nutzen."
+  view_no_perm: "&cDu hast keine Berechtigung, diesen Befehl auszuführen."
+  view_invalid_distance: "&cUngültige Distanz. Bitte gib eine Zahl an."
+  view_no_frames_found: "&eKeine unsichtbaren ItemFrames im Umkreis von {distance} Blöcken gefunden."
+  view_frames_highlighted: "&aHebe {count} unsichtbare ItemFrames mit Partikeln hervor ({duration}s)."
+  view_distance_too_high: "&cMaximale Distanz ist {max}. Dein Wert wurde angepasst."
+  usage: "&eVerwendung: /ethriahoe reload oder /ethriahoe view <distanz>"
 
   set_fixed: "&6Item-Frame wurde auf %state% gesetzt."
   set_visible: "&6Item-rame ist jetzt %state%."
@@ -41,6 +56,3 @@ messages:
   worldguard: "&4Worldguard gefunden! Regions-Funktionen sind aktiviert."
 
   no_alias: "Konnte Aliase nicht dynamisch setzen: "
-
-
-
